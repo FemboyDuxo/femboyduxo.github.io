@@ -7,12 +7,22 @@
   <style>
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
       background-color: #f4f4f9;
       font-family: sans-serif;
+    }
+
+    #question-text {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #2b2d42;
+      text-align: center;
+      padding: 0 16px;
     }
 
     .button-container {
@@ -50,10 +60,33 @@
 </head>
 <body>
 
+  <h2 id="question-text">Loading question...</h2>
+
   <div class="button-container">
     <button class="btn btn-red">Red Button</button>
     <button class="btn btn-blue">Blue Button</button>
   </div>
+
+  <script>
+    // Fetch the question.json file located in the same directory
+    fetch('question.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Update the header text with the "question" property value
+        if (data.question) {
+          document.getElementById('question-text').textContent = data.question;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching question.json:', error);
+        document.getElementById('question-text').textContent = 'Could not load question.';
+      });
+  </script>
 
 </body>
 </html>

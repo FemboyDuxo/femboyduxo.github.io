@@ -63,12 +63,11 @@
   <h2 id="question-text">Loading question...</h2>
 
   <div class="button-container">
-    <button class="btn btn-red">Red Button</button>
-    <button class="btn btn-blue">Blue Button</button>
+    <button id="red-btn" class="btn btn-red">Red</button>
+    <button id="blue-btn" class="btn btn-blue">Blue</button>
   </div>
 
   <script>
-    // Fetch the question.json file located in the same directory
     fetch('question.json')
       .then(response => {
         if (!response.ok) {
@@ -77,9 +76,17 @@
         return response.json();
       })
       .then(data => {
-        // Update the header text with the "question" property value
+        // Set header question text
         if (data.question) {
           document.getElementById('question-text').textContent = data.question;
+        }
+
+        // Set button texts from JSON properties
+        if (data.red) {
+          document.getElementById('red-btn').textContent = data.red;
+        }
+        if (data.blue) {
+          document.getElementById('blue-btn').textContent = data.blue;
         }
       })
       .catch(error => {
